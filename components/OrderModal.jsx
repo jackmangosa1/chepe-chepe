@@ -10,8 +10,10 @@ import { doc, setDoc } from "firebase/firestore";
 import { useAuth } from "../pages/Contexts/AuthContext";
 
 const OrderModal = ({ opened, setOpened, paymentMethod }) => {
-  const total = typeof window !== "undefined" && parseFloat(localStorage.getItem("total"));
-  const dishes = typeof window !== "undefined" && JSON.parse(localStorage.getItem("dishes"));
+  const total =
+    typeof window !== "undefined" && parseFloat(localStorage.getItem("total"));
+  const dishes =
+    typeof window !== "undefined" && JSON.parse(localStorage.getItem("dishes"));
   const dishSlugs = [];
   const dishQuantities = [];
   const dishSizes = [];
@@ -87,7 +89,7 @@ const OrderModal = ({ opened, setOpened, paymentMethod }) => {
         if (typeof window !== "undefined") {
           localStorage.setItem("order", id);
         }
-      
+
         router.push(`/order/${id}`);
       } catch (error) {
         console.log(error);
@@ -120,25 +122,47 @@ const OrderModal = ({ opened, setOpened, paymentMethod }) => {
     setFormErrors({ ...formErrors, [field]: "" });
   };
 
- 
-
   return (
     <Modal
-      overlayColor={theme.colorScheme === "dark" ? theme.colors.dark[9] : theme.colors.gray[2]}
+      overlayColor={
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[9]
+          : theme.colors.gray[2]
+      }
       overlayOpacity={0.55}
       overlayBlur={3}
       opened={opened}
-      onClose={setOpened(null)}
+      onClose={() => setOpened(null)} // <-- Pass a callback function instead
     >
       {/* Modal content */}
       <form action="" className={styles.formContainer}>
-        <input type="text" name="name" onChange={handleInput} onFocus={() =>handleFocus("name")} required placeholder="Name" />
+        <input
+          type="text"
+          name="name"
+          onChange={handleInput}
+          onFocus={() => handleFocus("name")}
+          required
+          placeholder="Name"
+        />
         <p style={{ color: "red" }}>{formErrors.name}</p>
 
-            <input type="text" name="phone" onChange={handleInput} onFocus={() =>handleFocus("phone")} required placeholder="Phone Number" />
+        <input
+          type="text"
+          name="phone"
+          onChange={handleInput}
+          onFocus={() => handleFocus("phone")}
+          required
+          placeholder="Phone Number"
+        />
         <p style={{ color: "red" }}>{formErrors.phone}</p>
 
-        <textarea name="address" onChange={handleInput} onFocus={() =>handleFocus("address")} placeholder="Address" rows={3}></textarea>
+        <textarea
+          name="address"
+          onChange={handleInput}
+          onFocus={() => handleFocus("address")}
+          placeholder="Address"
+          rows={3}
+        ></textarea>
         <p style={{ color: "red" }}>{formErrors.address}</p>
 
         <span>
